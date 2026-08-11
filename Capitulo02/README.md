@@ -156,10 +156,11 @@ Se abre el Editor de Power Query con una consulta llamada `Practica2_Demanda_Cru
 
 **Instrucciones:**
 
-1. Dentro del Editor de Power Query, ve a **Inicio → Nuevo origen → Archivo → Libro de Excel**.
+1. Dentro del Editor de Power Query, ve a **Inicio → Nuevo origen → Libro de Excel**.
 2. Navega hasta `C:\ForecLog\Practicas\P2\Practica2_Catalogo_Productos.xlsx` y haz clic en **Abrir**.
 3. En el panel **Navegador**, selecciona la hoja `Catalogo` (o la única hoja disponible).
 4. Haz clic en **Aceptar**.
+5. Si aparece como encabezado Columna 1, Columna 2, Columna 3, Columna 4; Promueva encabezados. Vaya a **Transformar** -> y en Tabla clic en **Usar la primera fila como encabezado**.
 
 **Resultado esperado:**
 
@@ -178,10 +179,11 @@ Aparece una segunda consulta en el panel izquierdo llamada `Catalogo` con 5 fila
 
 **Instrucciones:**
 
-1. En el Editor de Power Query, ve a **Inicio → Nuevo origen → Archivo → Libro de Excel**.
+1. En el Editor de Power Query, ve a **Inicio → Nuevo origen → Libro de Excel**.
 2. Navega hasta `C:\ForecLog\Practicas\P2\Practica2_Inventario_Bodega.xlsx` y haz clic en **Abrir**.
 3. En el panel **Navegador**, selecciona la hoja `Inventario`.
 4. Haz clic en **Aceptar**.
+
 
 **Resultado esperado:**
 
