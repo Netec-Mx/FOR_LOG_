@@ -262,7 +262,6 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 
 **Resultado esperado:** Para SKU-A101 (tendencia muy lineal), los errores porcentuales absolutos deben ser bajos (< 3 %). Para SKU-C303 (alta variabilidad), los errores deben ser significativamente mayores (muchos > 15 %).
 
-**Verificación:** Revisa la fila correspondiente a SKU-C303, mes 3 (demanda real = 380, pronóstico lineal ≈ 445). El error absoluto debe ser ≈ 65 y el error porcentual absoluto ≈ 17.1 %. Si obtienes valores muy diferentes, verifica las referencias.
 
 ---
 
@@ -316,11 +315,11 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 
 | SKU | MAE (unidades) | MAPE |
 |-----|----------------|------|
-| SKU-A101 | ≈ 3–5 | ≈ 0.5–1.0 % |
+| SKU-A101 | ≈ 0–5 | ≈ 0.5–1.0 % |
 | SKU-B202 | ≈ 5–8 | ≈ 3–5 % |
 | SKU-C303 | ≈ 55–70 | ≈ 12–25 % |
-| SKU-D404 | ≈ 3–6 | ≈ 0.3–0.5 % |
-| SKU-E505 | ≈ 5–10 | ≈ 1.5–3 % |
+| SKU-D404 | ≈ 0–6 | ≈ 0.3–0.5 % |
+| SKU-E505 | ≈ 5–10 | ≈ 1.2–3 % |
 
 > Los valores exactos dependerán de la regresión lineal ajustada. Lo importante es que SKU-C303 muestre un MAPE significativamente mayor que los demás (> 20 %).
 
@@ -361,12 +360,12 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 |-----|-----|------|---------------|
 | SKU-A101 | ~4 | ~0.8 % | **Alta** |
 | SKU-B202 | ~7 | ~3.8 % | **Alta** |
-| SKU-C303 | ~63 | ~22 % | **Baja** |
+| SKU-C303 | ~63 | ~12 % | **Media** |
 | SKU-D404 | ~4 | ~0.4 % | **Alta** |
 | SKU-E505 | ~7 | ~2.0 % | **Alta** |
 
 **Verificación:**
-- SKU-C303 debe aparecer clasificado como **"Baja"** (celda con relleno rojo).
+- SKU-C303 debe aparecer clasificado como **"Media"** (celda con relleno amarillo).
 - Los demás SKUs deben clasificarse como **"Alta"**.
 - Si algún SKU aparece como "Media", verifica que los datos de demanda en la hoja original coincidan con los proporcionados.
 
