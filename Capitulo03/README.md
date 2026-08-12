@@ -74,7 +74,7 @@ New-Item -ItemType Directory -Path "C:\ForecLog\Practicas\P3" -Force
 ```
 
 2. Verificar que Power BI Desktop está en la versión correcta:
-   - Abrir Power BI Desktop → **Archivo** → **Acerca de** → Confirmar versión `2.130.754.0`.
+   - Abrir Power BI Desktop → **Archivo** → **Acerca de** → Confirmar versión `2.130.754.0` o superior.
 
 3. Verificar idioma:
    - **Archivo** → **Opciones y configuración** → **Opciones** → **Configuración regional** → Confirmar **Español (México)**.
