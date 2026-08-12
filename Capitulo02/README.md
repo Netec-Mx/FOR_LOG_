@@ -4,7 +4,7 @@
 
 | Campo | Detalle |
 |-------|---------|
-| **Duración** | 38 minutos |
+| **Duración** | 40 minutos |
 | **Complejidad** | Media |
 | **Nivel Bloom** | Crear |
 | **Tecnologías** | Power BI Desktop 2.130.754.0, Power Query Editor, Lenguaje M |
