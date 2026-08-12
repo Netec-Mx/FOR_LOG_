@@ -74,7 +74,7 @@ New-Item -ItemType Directory -Path "C:\ForecLog\Practicas\P3" -Force
 ```
 
 2. Verificar que Power BI Desktop está en la versión correcta:
-   - Abrir Power BI Desktop → **Archivo** → **Acerca de** → Confirmar versión `2.130.754.0`.
+   - Abrir Power BI Desktop → **Archivo** → **Acerca de** → Confirmar versión `2.130.754.0` o superior.
 
 3. Verificar idioma:
    - **Archivo** → **Opciones y configuración** → **Opciones** → **Configuración regional** → Confirmar **Español (México)**.
@@ -141,12 +141,12 @@ ADDCOLUMNS(
    - Seleccionar la tabla `Calendario`.
    - Hacer clic derecho en el encabezado de columna `Date` → **Cambiar nombre** → escribir `Fecha` → **Enter**.
 7. Marcar como tabla de fechas:
-   - En **Vista de Datos**, con la tabla `Calendario` seleccionada, ir a la pestaña **Herramientas de tabla** en la cinta.
-   - Hacer clic en **Marcar como tabla de fechas** → seleccionar la columna `Fecha` → **Aceptar**.
+   - En **Vista de Tabla** (Costado Izquierdo de PowerBI), con la tabla `Calendario` seleccionada, ir a la pestaña **Herramientas de tabla** en la cinta.
+   - Hacer clic en **Marcar como tabla de fechas** → Activar → seleccionar la columna `Fecha` → **Aceptar**.
 
 **Resultado esperado:** La tabla `Calendario` contiene 731 filas (365 días de 2024 + 366 días de 2025, siendo 2024 año bisiesto). La columna `Fecha` va del 01/01/2024 al 31/12/2025. Aparece un ícono de calendario pequeño junto al nombre de la tabla indicando que está marcada como tabla de fechas.
 
-**Verificación:** En Vista de Datos, seleccionar la tabla Calendario y verificar en la barra inferior que muestra **731 filas**. Confirmar que la primera fila tiene Fecha = 01/01/2024 y la última = 31/12/2025.
+**Verificación:** En Vista de Datos, seleccionar la tabla Calendario y verificar en la barra inferior que muestra **731 filas**. 
 
 ---
 
