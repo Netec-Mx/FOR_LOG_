@@ -144,9 +144,9 @@ ADDCOLUMNS(
    - En **Vista de Datos**, con la tabla `Calendario` seleccionada, ir a la pestaña **Herramientas de tabla** en la cinta.
    - Hacer clic en **Marcar como tabla de fechas** → seleccionar la columna `Fecha` → **Aceptar**.
 
-**Resultado esperado:** La tabla `Calendario` contiene 731 filas (365 días de 2024 + 366 días de 2025, siendo 2024 año bisiesto). La columna `Fecha` va del 01/01/2024 al 31/12/2025. Aparece un ícono de calendario pequeño junto al nombre de la tabla indicando que está marcada como tabla de fechas.
+**Resultado esperado:** La tabla `Calendario` contiene 731 filas (365 días de 2024 + 366 días de 2025, siendo 2024 año bisiesto). Aparece un ícono de calendario pequeño junto al nombre de la tabla indicando que está marcada como tabla de fechas.
 
-**Verificación:** En Vista de Datos, seleccionar la tabla Calendario y verificar en la barra inferior que muestra **731 filas**. Confirmar que la primera fila tiene Fecha = 01/01/2024 y la última = 31/12/2025.
+**Verificación:** En Vista de Datos, seleccionar la tabla Calendario y verificar en la barra inferior que muestra **731 filas**.
 
 ---
 
@@ -157,24 +157,25 @@ ADDCOLUMNS(
 **Instrucciones:**
 
 1. Cambiar a **Vista de Modelo** (ícono de tres rectángulos conectados en la barra lateral izquierda).
-2. Organizar visualmente las tablas arrastrándolas: colocar `Calendario` arriba al centro, `Catálogo` a la izquierda, `Demanda` en el centro-abajo e `Inventario` a la derecha-abajo.
-3. **Relación 1 — Calendario → Demanda:**
-   - Arrastrar el campo `Fecha` de la tabla `Calendario` hacia el campo `Fecha` (o `FechaDespacho`) de la tabla `Demanda`.
+2. Si encuentra relaciones creadas (conectores entre tablas) elimínelos con clic derecho sobre el conector y eliminar. Confirme la eliminación.
+3. Organizar visualmente las tablas arrastrándolas: colocar `Calendario` arriba al centro, `Catálogo` a la izquierda, `Modelo_Demanda_Inventario` en el centro-abajo e `Inventario` a la derecha-abajo.
+4. **Relación 1 — Calendario → Modelo_Demanda_Inventario:**
+   - Arrastrar el campo `Fecha` de la tabla `Calendario` hacia el campo `Fecha` (o `FechaDespacho`) de la tabla `Modelo_Demanda_Inventario`.
    - En el cuadro de diálogo que aparece, verificar:
      - Cardinalidad: **Muchos a uno (*:1)**
      - Dirección de filtro cruzado: **Única** (de Calendario hacia Demanda)
      - Marcar **Activar esta relación** ✓
    - Hacer clic en **Aceptar**.
 
-4. **Relación 2 — Catálogo → Demanda:**
-   - Arrastrar el campo `SKU` (o `CodigoProducto`) de la tabla `Catálogo` hacia el campo `SKU` (o `CodigoProducto`) de la tabla `Demanda`.
+5. **Relación 2 — Catálogo → Modelo_Demanda_Inventario:**
+   - Arrastrar el campo `SKU` (o `CodigoProducto`) de la tabla `Catálogo` hacia el campo `SKU` (o `CodigoProducto`) de la tabla `Modelo_Demanda_Inventario`.
    - Verificar:
      - Cardinalidad: **Muchos a uno (*:1)**
      - Dirección de filtro cruzado: **Única** (de Catálogo hacia Demanda)
      - Activar esta relación ✓
    - Hacer clic en **Aceptar**.
 
-5. **Relación 3 — Catálogo → Inventario:**
+6. **Relación 3 — Catálogo → Inventario:**
    - Arrastrar el campo `SKU` de la tabla `Catálogo` hacia el campo `SKU` de la tabla `Inventario`.
    - Verificar:
      - Cardinalidad: **Muchos a uno (*:1)**
@@ -182,7 +183,7 @@ ADDCOLUMNS(
      - Activar esta relación ✓
    - Hacer clic en **Aceptar**.
 
-6. **Relación 4 — Calendario → Inventario (inactiva):**
+7. **Relación 4 — Calendario → Inventario (inactiva):**
    - Arrastrar el campo `Fecha` de la tabla `Calendario` hacia el campo `Fecha` (o `FechaCorte`) de la tabla `Inventario`.
    - Si Power BI muestra un aviso de ambigüedad, verificar:
      - Cardinalidad: **Muchos a uno (*:1)**
@@ -203,13 +204,13 @@ ADDCOLUMNS(
 
 **Instrucciones:**
 
-1. En la **Vista de Informe**, seleccionar la tabla `Demanda` en el panel de Datos (lado derecho).
+1. En la **Vista de Informe**, seleccionar la tabla `Modelo_Demanda_Inventario` en el panel de Datos (lado derecho).
 2. Ir a la pestaña **Modelado** → **Nueva medida**.
 3. Crear la medida **Demanda Total**:
 
 ```dax
-Demanda Total =
-SUM(Demanda[UnidadesDespachadas])
+Demanda Total = 
+SUM(Modelo_Demanda_Inventario[Demanda_Unidades])
 ```
 
 4. Crear la medida **Demanda Promedio Mensual**:
@@ -218,17 +219,17 @@ SUM(Demanda[UnidadesDespachadas])
 Demanda Promedio Mensual =
 AVERAGEX(
     VALUES(Calendario[Mes]),
-    CALCULATE(SUM(Demanda[UnidadesDespachadas]))
+    CALCULATE(SUM(Modelo_Demanda_Inventario[Demanda_Unidades]))
 )
 ```
 
 5. Seleccionar la tabla `Inventario` en el panel de Datos. Crear la medida **Stock Actual**:
 
 ```dax
-Stock Actual =
+Stock Actual = 
 CALCULATE(
-    SUM(Inventario[StockDisponible]),
-    LASTDATE(Inventario[FechaCorte])
+    SUM(Inventario[Stock_Disponible]),
+    LASTDATE(Calendario[Fecha])
 )
 ```
 
@@ -237,12 +238,12 @@ CALCULATE(
 ```dax
 Inventario Promedio =
 AVERAGEX(
-    VALUES(Inventario[FechaCorte]),
-    CALCULATE(SUM(Inventario[StockDisponible]))
+    VALUES(Inventario[AñoMes]),
+    CALCULATE(SUM(Inventario[Stock_Disponible]))
 )
 ```
 
-7. Ahora crear las **cuatro medidas de indicadores clave**. Seleccionar la tabla `Demanda` y crear cada una:
+7. Ahora crear las **cuatro medidas de indicadores clave**. Seleccionar la tabla `Modelo_Demanda_Inventario` y crear cada una:
 
 **Medida: Rotación de Inventario**
 
@@ -271,32 +272,29 @@ RETURN
 **Medida: Stock de Seguridad**
 
 ```dax
-Stock de Seguridad =
+Stock de Seguridad = 
 VAR Z = 1.65
 VAR DesvDemanda =
-    STDEV.P(Demanda[UnidadesDespachadas])
-VAR LeadTime =
-    AVERAGE(Catalogo[LeadTimeDias])
+    STDEV.P(Modelo_Demanda_Inventario[Demanda_Unidades])
 RETURN
-    Z * DesvDemanda * SQRT(LeadTime)
+    Z * DesvDemanda 
 ```
 
-> **Nota:** El valor Z = 1.65 corresponde a un nivel de servicio del 95%. El campo `LeadTimeDias` proviene de la tabla Catálogo.
 
 **Medida: Rupturas de Stock**
 
 ```dax
-Rupturas de Stock =
+Rupturas de Stock = 
 COUNTROWS(
     FILTER(
         Inventario,
-        Inventario[StockDisponible] = 0
+        Inventario[Stock_Disponible] >= 0
     )
 )
 ```
 
 8. Formatear las medidas:
-   - Seleccionar `Rotación de Inventario` → en la pestaña **Herramientas de medida** → Formato: **Número decimal** (2 decimales).
+   - Seleccionar `Rotación de Inventario` → en la pestaña **Herramientas de medición** → Formato: **Número decimal** (2 decimales).
    - Seleccionar `Cobertura Días` → Formato: **Número entero**.
    - Seleccionar `Stock de Seguridad` → Formato: **Número entero**.
    - Seleccionar `Rupturas de Stock` → Formato: **Número entero**.
@@ -305,7 +303,7 @@ COUNTROWS(
 
 **Verificación:** Crear una tabla temporal en el lienzo (Visualización → Tabla) y arrastrar las 4 medidas. Verificar que los valores no sean todos cero ni presenten errores. Valores de referencia aproximados para el dataset completo (sin filtro de SKU):
 - Rotación de Inventario: valor > 0
-- Cobertura Días: valor entre 10 y 90
+- Cobertura Días: valor entre 10 y 120
 - Stock de Seguridad: valor > 0
 - Rupturas de Stock: valor ≥ 0 (número entero)
 
