@@ -203,35 +203,35 @@ Tercera consulta en el panel izquierdo: `Inventario` con aproximadamente 63 fila
 **Instrucciones:**
 
 1. Selecciona la consulta `Practica2_Demanda_Cruda` en el panel izquierdo.
-2. **Eliminar columna innecesaria:**
+2. Al costado derecho, en la sección Pasos Aplicados, elimine el paso **Tipo Cambiado** en caso que exista. Clic en **Eliminar**
+3. **Eliminar columna innecesaria:**
    - Haz clic derecho en el encabezado de la columna `notas` → **Quitar**.
-3. **Recortar espacios en la columna SKU:**
+4. **Recortar espacios en la columna SKU:**
    - Selecciona la columna `sku`.
-   - Ve a **Transformar → Formato → Recortar**.
-4. **Estandarizar nombre de columna SKU:**
+   - Ve a **Clic derecho** Sobre la columna → **Transformar** → **Recortar**.
+5. **Estandarizar nombre de columna SKU:**
    - Haz doble clic en el encabezado `sku` y renómbralo a `SKU` (mayúsculas).
-5. **Filtrar solo movimientos de salida:**
+6. **Filtrar solo movimientos de salida:**
    - Haz clic en la flecha desplegable del encabezado `tipo_movimiento`.
    - Desmarca `Devolucion` y deja marcado solo `Salida`.
    - Haz clic en **Aceptar**.
-6. **Corregir tipo de dato de la columna `fecha`:**
+7. **Corregir tipo de dato de la columna `fecha`:**
    - Selecciona la columna `fecha`.
-   - Ve a **Transformar → Tipo de datos → Fecha**.
+   - Ve al costado izquierdo del nombre de la columna, donde encontrarás un icono ABC y cambialo por **Fecha**
    - Si aparece el cuadro "Cambiar tipo de columna", selecciona **Reemplazar actual**.
-7. **Corregir tipo de dato de `demanda_unidades`:**
+8. **Corregir tipo de dato de `demanda_unidades`:**
    - Selecciona la columna `demanda_unidades`.
-   - Ve a **Transformar → Tipo de datos → Número entero**.
-   - Selecciona **Reemplazar actual**.
-8. **Eliminar filas con valores nulos en `demanda_unidades`:**
+   - Ve al costado izquierdo del nombre de la columna, donde encontrarás un icono ABC y cambialo por **Número Entero**
+9. **Eliminar filas con valores nulos en `demanda_unidades`:**
    - Haz clic en la flecha desplegable de `demanda_unidades`.
    - Desmarca **(null)** si aparece en la lista.
    - Haz clic en **Aceptar**.
-9. **Eliminar valores negativos (atípicos):**
+10. **Eliminar valores negativos (atípicos):**
    - Haz clic en la flecha desplegable de `demanda_unidades`.
    - Selecciona **Filtros de número → Es mayor o igual que…** → escribe `0` → **Aceptar**.
-10. **Eliminar la columna `tipo_movimiento`** (ya no es necesaria tras el filtrado):
+11. **Eliminar la columna `tipo_movimiento`** (ya no es necesaria tras el filtrado):
     - Clic derecho en `tipo_movimiento` → **Quitar**.
-11. **Renombrar la columna `fecha`** a `Fecha` y `demanda_unidades` a `Demanda_Unidades`.
+12. **Renombrar la columna `fecha`** a `Fecha` y `demanda_unidades` a `Demanda_Unidades`.
 
 **Resultado esperado:**
 
@@ -284,16 +284,17 @@ Nueva columna `AñoMes` con 60 valores en formato "AAAA-MM", tipo texto.
 **Instrucciones:**
 
 1. Selecciona la consulta `Inventario` en el panel izquierdo.
-2. **Corregir tipos de datos:**
+2. En la sección **Pasos Aplicados** al costado derecho, si hay un paso llamado **Tipo Cambiado**, elimínelo.
+3. **Corregir tipos de datos:**
    - Selecciona la columna `SKU` → tipo **Texto**.
    - Selecciona `Mes` → tipo **Número entero**.
    - Selecciona `Anio` → tipo **Número entero**.
    - Selecciona `Stock_Disponible` → tipo **Número entero**.
    - Selecciona `Stock_Minimo` → tipo **Número entero**.
-3. **Eliminar filas duplicadas:**
+4. **Eliminar filas duplicadas:**
    - Selecciona todas las columnas (Ctrl + A en el área de encabezados).
    - Ve a **Inicio → Quitar filas → Quitar duplicados**.
-4. **Crear columna `AñoMes`** para poder combinar con la tabla de demanda:
+5. **Crear columna `AñoMes`** para poder combinar con la tabla de demanda:
    - Ve a **Agregar columna → Columna personalizada**.
    - Nombre: `AñoMes`
    - Fórmula:
@@ -326,7 +327,7 @@ La tabla `Inventario` tiene exactamente 60 filas (tras eliminar duplicados), con
 1. Selecciona la consulta `Catalogo` en el panel izquierdo.
 2. **Verificar tipos de datos:** todas las columnas deben ser tipo **Texto**. Si alguna no lo es, corrígela.
 3. **Recortar espacios** en la columna `SKU`:
-   - Selecciona `SKU` → **Transformar → Formato → Recortar**.
+   - Selecciona `SKU` →Clic Derecho → **Transformar → Recortar**.
 4. **Crear columna `Descripcion_Completa`:**
    - Ve a **Agregar columna → Columna personalizada**.
    - Nombre: `Descripcion_Completa`
@@ -377,7 +378,7 @@ La tabla `Catalogo` tiene 5 filas y 5 columnas. La nueva columna muestra valores
 
 **Resultado esperado:**
 
-La tabla `Practica2_Demanda_Cruda` ahora tiene 7 columnas: `SKU`, `Fecha`, `Demanda_Unidades`, `AñoMes`, `Nombre_Producto`, `Categoria`, `Unidad_Medida`, `Descripcion_Completa`. Sigue teniendo 60 filas.
+La tabla `Practica2_Demanda_Cruda` ahora tiene 8 columnas: `SKU`, `Fecha`, `Demanda_Unidades`, `AñoMes`, `Nombre_Producto`, `Categoria`, `Unidad_Medida`, `Descripcion_Completa`. Sigue teniendo 60 filas.
 
 **Verificación:**
 
