@@ -428,13 +428,9 @@ La tabla final tiene 10 columnas: `SKU`, `Fecha`, `Demanda_Unidades`, `AñoMes`,
 
 1. **Renombrar la consulta principal:**
    - Haz clic derecho en `Practica2_Demanda_Cruda` en el panel izquierdo → **Cambiar nombre** → escribe `Modelo_Demanda_Inventario`.
-2. **Deshabilitar carga de consultas auxiliares** (para que no aparezcan como tablas separadas en el modelo):
-   - Haz clic derecho en la consulta `Catalogo` → **Habilitar carga** (desmarcar la casilla para que NO se cargue).
-   - Haz clic derecho en la consulta `Inventario` → **Habilitar carga** (desmarcar).
-   - Confirma con **Continuar** si aparece un aviso.
-3. **Cargar al modelo:**
+2. **Cargar al modelo:**
    - Ve a **Inicio → Cerrar y aplicar**.
-4. Espera a que Power BI Desktop procese la carga (barra de progreso en la parte inferior).
+3. Espera a que Power BI Desktop procese la carga (barra de progreso en la parte inferior).
 
 **Resultado esperado:**
 
