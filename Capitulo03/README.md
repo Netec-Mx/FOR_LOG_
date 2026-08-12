@@ -6,7 +6,7 @@ Construcción de un dashboard integral en Power BI que integre rotación, cobert
 
 | Campo | Valor |
 |-------|-------|
-| **Duración** | 55 minutos |
+| **Duración** | 50 minutos |
 | **Complejidad** | Alta |
 | **Nivel Bloom** | Crear |
 | **Archivo de entrada** | `C:\ForecLog\Practicas\P2\Practica2_Modelo_Analitico.pbix` |
