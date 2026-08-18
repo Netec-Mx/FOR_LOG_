@@ -1,4 +1,7 @@
-# Forecasting Aplicado a Logística de Excel a Power BI e IA Generativa
+<img src="images/neteclogo (2).png" alt="logo" width="300"/>
+
+
+# Forecasting Aplicado a Logística 
 
 La sesión conecta de forma ágil los métodos de pronóstico construidos en Excel con la preparación de datos en Power Query, la construcción de dashboards interactivos en Power BI Desktop (gratuito) y el uso de IA generativa como asistente en la toma de decisiones de inventario, aplicados a un caso integrador de gestión de inventarios y bodegas. El enfoque es eminentemente práctico y visual, orientado al análisis de negocio: rotación de inventario, cobertura, stock de seguridad, quiebres de stock, tendencias de consumo, pronóstico vs. demanda real y escenarios asistidos por IA.
 
@@ -32,8 +35,12 @@ La sesión conecta de forma ágil los métodos de pronóstico construidos en Exc
   - Descripción: Usar IA generativa a partir del dashboard construido en Power BI para interpretar la variabilidad de un SKU crítico, generar escenarios optimista, conservador y crítico, y redactar una recomendación de reabastecimiento aplicando buenas prácticas de seguridad y privacidad de datos.
   - Duración estimada: 17 min
 
-## Flujo de colaboración
+---
 
-- Trabajar en `changes_course`.
-- Crear Pull Request hacia `main`.
-- Merge por `Squash and merge`.
+## 📬 **Contacto y más información**
+
+Si tienes alguna pregunta o necesitas más detalles, no dudes en [contactarnos](mailto:soporte@netec.com). También puedes encontrar más recursos en nuestra [página](https://netec.com).
+
+---
+
+¡Gracias por visitar nuestra plataforma! No olvides revisar todos los laboratorios y comenzar tu viaje de aprendizaje hoy mismo.
