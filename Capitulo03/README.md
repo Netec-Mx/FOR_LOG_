@@ -6,7 +6,7 @@ Construcción de un dashboard integral en Power BI que integre rotación, cobert
 
 | Campo | Valor |
 |-------|-------|
-| **Duración** | 55 minutos |
+| **Duración** | 50 minutos |
 | **Complejidad** | Alta |
 | **Nivel Bloom** | Crear |
 | **Archivo de entrada** | `C:\ForecLog\Practicas\P2\Practica2_Modelo_Analitico.pbix` |
@@ -74,7 +74,7 @@ New-Item -ItemType Directory -Path "C:\ForecLog\Practicas\P3" -Force
 ```
 
 2. Verificar que Power BI Desktop está en la versión correcta:
-   - Abrir Power BI Desktop → **Archivo** → **Acerca de** → Confirmar versión `2.130.754.0`.
+   - Abrir Power BI Desktop → **Archivo** → **Acerca de** → Confirmar versión `2.130.754.0` o superior.
 
 3. Verificar idioma:
    - **Archivo** → **Opciones y configuración** → **Opciones** → **Configuración regional** → Confirmar **Español (México)**.
@@ -144,9 +144,9 @@ ADDCOLUMNS(
    - En **Vista de Datos**, con la tabla `Calendario` seleccionada, ir a la pestaña **Herramientas de tabla** en la cinta.
    - Hacer clic en **Marcar como tabla de fechas** → seleccionar la columna `Fecha` → **Aceptar**.
 
-**Resultado esperado:** La tabla `Calendario` contiene 731 filas (365 días de 2024 + 366 días de 2025, siendo 2024 año bisiesto). La columna `Fecha` va del 01/01/2024 al 31/12/2025. Aparece un ícono de calendario pequeño junto al nombre de la tabla indicando que está marcada como tabla de fechas.
+**Resultado esperado:** La tabla `Calendario` contiene 731 filas (365 días de 2024 + 366 días de 2025, siendo 2024 año bisiesto). Aparece un ícono de calendario pequeño junto al nombre de la tabla indicando que está marcada como tabla de fechas.
 
-**Verificación:** En Vista de Datos, seleccionar la tabla Calendario y verificar en la barra inferior que muestra **731 filas**. Confirmar que la primera fila tiene Fecha = 01/01/2024 y la última = 31/12/2025.
+**Verificación:** En Vista de Datos, seleccionar la tabla Calendario y verificar en la barra inferior que muestra **731 filas**.
 
 ---
 
@@ -157,24 +157,25 @@ ADDCOLUMNS(
 **Instrucciones:**
 
 1. Cambiar a **Vista de Modelo** (ícono de tres rectángulos conectados en la barra lateral izquierda).
-2. Organizar visualmente las tablas arrastrándolas: colocar `Calendario` arriba al centro, `Catálogo` a la izquierda, `Demanda` en el centro-abajo e `Inventario` a la derecha-abajo.
-3. **Relación 1 — Calendario → Demanda:**
-   - Arrastrar el campo `Fecha` de la tabla `Calendario` hacia el campo `Fecha` (o `FechaDespacho`) de la tabla `Demanda`.
+2. Si encuentra relaciones creadas (conectores entre tablas) elimínelos con clic derecho sobre el conector y eliminar. Confirme la eliminación.
+3. Organizar visualmente las tablas arrastrándolas: colocar `Calendario` arriba al centro, `Catálogo` a la izquierda, `Modelo_Demanda_Inventario` en el centro-abajo e `Inventario` a la derecha-abajo.
+4. **Relación 1 — Calendario → Modelo_Demanda_Inventario:**
+   - Arrastrar el campo `Fecha` de la tabla `Calendario` hacia el campo `Fecha` (o `FechaDespacho`) de la tabla `Modelo_Demanda_Inventario`.
    - En el cuadro de diálogo que aparece, verificar:
      - Cardinalidad: **Muchos a uno (*:1)**
      - Dirección de filtro cruzado: **Única** (de Calendario hacia Demanda)
      - Marcar **Activar esta relación** ✓
    - Hacer clic en **Aceptar**.
 
-4. **Relación 2 — Catálogo → Demanda:**
-   - Arrastrar el campo `SKU` (o `CodigoProducto`) de la tabla `Catálogo` hacia el campo `SKU` (o `CodigoProducto`) de la tabla `Demanda`.
+5. **Relación 2 — Catálogo → Modelo_Demanda_Inventario:**
+   - Arrastrar el campo `SKU` (o `CodigoProducto`) de la tabla `Catálogo` hacia el campo `SKU` (o `CodigoProducto`) de la tabla `Modelo_Demanda_Inventario`.
    - Verificar:
      - Cardinalidad: **Muchos a uno (*:1)**
      - Dirección de filtro cruzado: **Única** (de Catálogo hacia Demanda)
      - Activar esta relación ✓
    - Hacer clic en **Aceptar**.
 
-5. **Relación 3 — Catálogo → Inventario:**
+6. **Relación 3 — Catálogo → Inventario:**
    - Arrastrar el campo `SKU` de la tabla `Catálogo` hacia el campo `SKU` de la tabla `Inventario`.
    - Verificar:
      - Cardinalidad: **Muchos a uno (*:1)**
@@ -182,7 +183,7 @@ ADDCOLUMNS(
      - Activar esta relación ✓
    - Hacer clic en **Aceptar**.
 
-6. **Relación 4 — Calendario → Inventario (inactiva):**
+7. **Relación 4 — Calendario → Inventario (inactiva):**
    - Arrastrar el campo `Fecha` de la tabla `Calendario` hacia el campo `Fecha` (o `FechaCorte`) de la tabla `Inventario`.
    - Si Power BI muestra un aviso de ambigüedad, verificar:
      - Cardinalidad: **Muchos a uno (*:1)**
@@ -203,13 +204,13 @@ ADDCOLUMNS(
 
 **Instrucciones:**
 
-1. En la **Vista de Informe**, seleccionar la tabla `Demanda` en el panel de Datos (lado derecho).
+1. En la **Vista de Informe**, seleccionar la tabla `Modelo_Demanda_Inventario` en el panel de Datos (lado derecho).
 2. Ir a la pestaña **Modelado** → **Nueva medida**.
 3. Crear la medida **Demanda Total**:
 
 ```dax
-Demanda Total =
-SUM(Demanda[UnidadesDespachadas])
+Demanda Total = 
+SUM(Modelo_Demanda_Inventario[Demanda_Unidades])
 ```
 
 4. Crear la medida **Demanda Promedio Mensual**:
@@ -218,17 +219,17 @@ SUM(Demanda[UnidadesDespachadas])
 Demanda Promedio Mensual =
 AVERAGEX(
     VALUES(Calendario[Mes]),
-    CALCULATE(SUM(Demanda[UnidadesDespachadas]))
+    CALCULATE(SUM(Modelo_Demanda_Inventario[Demanda_Unidades]))
 )
 ```
 
 5. Seleccionar la tabla `Inventario` en el panel de Datos. Crear la medida **Stock Actual**:
 
 ```dax
-Stock Actual =
+Stock Actual = 
 CALCULATE(
-    SUM(Inventario[StockDisponible]),
-    LASTDATE(Inventario[FechaCorte])
+    SUM(Inventario[Stock_Disponible]),
+    LASTDATE(Calendario[Fecha])
 )
 ```
 
@@ -237,12 +238,12 @@ CALCULATE(
 ```dax
 Inventario Promedio =
 AVERAGEX(
-    VALUES(Inventario[FechaCorte]),
-    CALCULATE(SUM(Inventario[StockDisponible]))
+    VALUES(Inventario[AñoMes]),
+    CALCULATE(SUM(Inventario[Stock_Disponible]))
 )
 ```
 
-7. Ahora crear las **cuatro medidas de indicadores clave**. Seleccionar la tabla `Demanda` y crear cada una:
+7. Ahora crear las **cuatro medidas de indicadores clave**. Seleccionar la tabla `Modelo_Demanda_Inventario` y crear cada una:
 
 **Medida: Rotación de Inventario**
 
@@ -271,32 +272,29 @@ RETURN
 **Medida: Stock de Seguridad**
 
 ```dax
-Stock de Seguridad =
+Stock de Seguridad = 
 VAR Z = 1.65
 VAR DesvDemanda =
-    STDEV.P(Demanda[UnidadesDespachadas])
-VAR LeadTime =
-    AVERAGE(Catalogo[LeadTimeDias])
+    STDEV.P(Modelo_Demanda_Inventario[Demanda_Unidades])
 RETURN
-    Z * DesvDemanda * SQRT(LeadTime)
+    Z * DesvDemanda 
 ```
 
-> **Nota:** El valor Z = 1.65 corresponde a un nivel de servicio del 95%. El campo `LeadTimeDias` proviene de la tabla Catálogo.
 
 **Medida: Rupturas de Stock**
 
 ```dax
-Rupturas de Stock =
+Rupturas de Stock = 
 COUNTROWS(
     FILTER(
         Inventario,
-        Inventario[StockDisponible] = 0
+        Inventario[Stock_Disponible] >= 0
     )
 )
 ```
 
 8. Formatear las medidas:
-   - Seleccionar `Rotación de Inventario` → en la pestaña **Herramientas de medida** → Formato: **Número decimal** (2 decimales).
+   - Seleccionar `Rotación de Inventario` → en la pestaña **Herramientas de medición** → Formato: **Número decimal** (2 decimales).
    - Seleccionar `Cobertura Días` → Formato: **Número entero**.
    - Seleccionar `Stock de Seguridad` → Formato: **Número entero**.
    - Seleccionar `Rupturas de Stock` → Formato: **Número entero**.
@@ -305,7 +303,7 @@ COUNTROWS(
 
 **Verificación:** Crear una tabla temporal en el lienzo (Visualización → Tabla) y arrastrar las 4 medidas. Verificar que los valores no sean todos cero ni presenten errores. Valores de referencia aproximados para el dataset completo (sin filtro de SKU):
 - Rotación de Inventario: valor > 0
-- Cobertura Días: valor entre 10 y 90
+- Cobertura Días: valor entre 10 y 120
 - Stock de Seguridad: valor > 0
 - Rupturas de Stock: valor ≥ 0 (número entero)
 
@@ -323,21 +321,14 @@ Eliminar la tabla temporal después de verificar.
 2. En el panel **Visualizaciones** (lado derecho), seleccionar el visual **Tarjeta** (ícono con un número grande).
 3. Arrastrar la medida `Rotación de Inventario` al campo **Campos** de la tarjeta.
 4. Posicionar la tarjeta en la esquina superior izquierda del lienzo. Redimensionar a aproximadamente 250 x 120 px.
-5. Con la tarjeta seleccionada, ir a **Formato** (ícono de rodillo de pintura):
-   - **Etiqueta de categoría** → Activar → Texto: "Rotación de Inventario"
-   - **Etiqueta de datos** → Tamaño de fuente: 28
-6. Repetir los pasos 2-5 para crear tres tarjetas adicionales:
+5. Repetir los pasos 2-5 para crear tres tarjetas adicionales:
    - Tarjeta 2: medida `Cobertura Días` — etiqueta "Cobertura (Días)"
    - Tarjeta 3: medida `Stock de Seguridad` — etiqueta "Stock de Seguridad"
    - Tarjeta 4: medida `Rupturas de Stock` — etiqueta "Rupturas de Stock"
-7. Alinear las cuatro tarjetas horizontalmente en la parte superior de la página:
-   - Seleccionar las cuatro tarjetas (Ctrl + clic en cada una).
-   - Pestaña **Formato** → **Alinear** → **Alinear arriba**.
-   - **Formato** → **Distribuir** → **Distribuir horizontalmente**.
-8. Agregar un título a la página:
+6. Agregar un título a la página:
    - Insertar un **Cuadro de texto** (pestaña **Insertar** → **Cuadro de texto**).
    - Escribir: **"Centro de Monitoreo de Demanda e Inventario"**
-   - Formato: Negrita, tamaño 20, centrado.
+   - Formato: Negrita, tamaño 32, centrado.
    - Posicionar encima de las tarjetas KPI.
 
 **Resultado esperado:** La página `KPIs Inventario` muestra un título y cuatro tarjetas alineadas horizontalmente, cada una con el valor numérico del indicador y su etiqueta descriptiva.
@@ -355,12 +346,12 @@ Eliminar la tabla temporal después de verificar.
 1. Crear una nueva página: clic en el ícono **+** en la parte inferior → Renombrar a `Tendencia Demanda`.
 2. En el panel Visualizaciones, seleccionar **Gráfico de líneas** (ícono de línea con puntos).
 3. Configurar los campos del gráfico:
-   - **Eje X:** Arrastrar `Calendario[Fecha]` → Power BI creará automáticamente la jerarquía de fechas. Hacer clic en la flecha hacia abajo (▼) en el eje X del visual hasta llegar al nivel **Mes**.
+   - **Eje X:** Arrastrar `Calendario[Fecha]` 
    - **Eje Y:** Arrastrar la medida `Demanda Total`.
    - **Leyenda:** Arrastrar `Catálogo[SKU]`.
 4. Redimensionar el gráfico para ocupar aproximadamente el 60% del ancho de la página y 50% de la altura.
 5. Formatear el gráfico:
-   - Seleccionar el visual → **Formato** → **Título** → Texto: "Tendencia de Demanda Mensual por SKU"
+   - Seleccionar el visual → **Formato** → **General** → **Título** → Texto: "Tendencia de Demanda Mensual por SKU"
    - **Eje X** → Título: "Mes"
    - **Eje Y** → Título: "Unidades Despachadas"
 6. **Agregar segmentador de SKU:**
@@ -371,7 +362,7 @@ Eliminar la tabla temporal después de verificar.
 7. **Agregar segmentador temporal (por Trimestre):**
    - Insertar otro segmentador.
    - Arrastrar `Calendario[Trimestre]` al campo del segmentador.
-   - Formato → Estilo: **Botones** (tiles).
+   - Formato → Estilo: **Mosaico** (tiles).
    - Posicionar encima del gráfico de líneas.
 
 **Resultado esperado:** La página muestra un gráfico de líneas con 5 líneas de color diferente (una por SKU) que muestran la tendencia mensual de enero a diciembre 2024. Los segmentadores permiten filtrar por SKU individual y por trimestre.
@@ -390,14 +381,12 @@ Eliminar la tabla temporal después de verificar.
 **Instrucciones:**
 
 1. En la página `Tendencia Demanda`, seleccionar el gráfico de líneas creado en el Paso 6.
-2. **Importante:** Para que el pronóstico funcione, el Eje X debe contener un campo de fecha continuo (no jerárquico). Modificar la configuración:
-   - En el panel Campos del visual, en **Eje X**, hacer clic en la flecha desplegable junto a `Fecha` → seleccionar **Fecha** (no la jerarquía "Año > Trimestre > Mes > Día").
-   - Esto cambia el eje a un eje de fecha continuo.
+2. **Importante:** Para que el pronóstico funcione, el Eje X debe contener un campo de fecha continuo (no jerárquico). 
 3. **Importante:** Remover el campo de Leyenda temporalmente para que el pronóstico funcione sobre una sola serie:
    - Remover `Catálogo[SKU]` del campo **Leyenda** (arrastrar fuera o hacer clic en la X).
    - El gráfico ahora muestra una sola línea agregada de demanda total.
 4. Con el gráfico seleccionado, ir al panel **Analítica** (ícono de lupa con gráfico, al lado del ícono de formato/rodillo de pintura).
-5. Expandir la sección **Pronóstico**.
+5. Activar la sección **Previsión**.
 6. Hacer clic en **+ Agregar** para activar el pronóstico.
 7. Configurar los parámetros:
    - **Unidades de pronóstico:** 3 (puntos hacia el futuro)
@@ -426,7 +415,10 @@ Eliminar la tabla temporal después de verificar.
 **Instrucciones:**
 
 1. Crear una nueva página: clic en **+** → Renombrar a `Pronóstico vs Real`.
-2. Primero, crear una medida auxiliar que simule un valor de pronóstico basado en promedio móvil (para comparación visual):
+2. Sincroniza el filtro SKU creado en Tendencia Demanda, con Pronóstico Real.
+   a. Clic en Ver -> Sincronización de segmentaciones.
+   b. Selecciona el Segmentador SKU y sincroniza el segmentador con la página Pronóstico vs Real. Activa los cuatro checks de las 2 páginas finales.
+4. Primero, crear una medida auxiliar sobre la tabla **Modelo_Demanda_Inventario** que simule un valor de pronóstico basado en promedio móvil (para comparación visual):
 
 ```dax
 Pronóstico Promedio Móvil =
@@ -452,16 +444,13 @@ RETURN
 4. Configurar los campos:
    - **Eje X:** `Calendario[Fecha]` (seleccionar el campo directo, no la jerarquía — usar nivel Mes).
    - **Valores del Eje Y:** Arrastrar `Demanda Total` (primera línea).
-   - Arrastrar `Pronóstico Promedio Móvil` al mismo campo de Valores del Eje Y (segunda línea).
+   - Arrastrar `Pronóstico Promedio Móvil` al mismo campo de Valores del Eje Y (Y Secundario).
 5. Formatear:
    - **Título:** "Pronóstico vs. Demanda Real"
    - En **Formato** → **Líneas** → configurar:
      - `Demanda Total`: línea sólida, color azul, grosor 2.5
      - `Pronóstico Promedio Móvil`: línea discontinua (guiones), color naranja, grosor 2
-6. Agregar el segmentador de SKU (copiar del paso anterior o crear uno nuevo):
-   - Insertar segmentador → Campo: `Catálogo[SKU]`.
-   - Posicionar a la izquierda del gráfico.
-7. Redimensionar el gráfico para ocupar la mayor parte de la página.
+6. Redimensionar el gráfico para ocupar la mayor parte de la página, sin cubrir el segmentador.
 
 **Resultado esperado:** Un gráfico de líneas con dos series: una línea azul sólida (demanda real) y una línea naranja discontinua (pronóstico por promedio móvil). Ambas líneas se superponen mostrando las desviaciones entre pronóstico y realidad.
 
@@ -480,7 +469,7 @@ RETURN
 1. Volver a la página `KPIs Inventario` (primera página).
 2. Insertar un segmentador de **Categoría**:
    - Visual: Segmentador → Campo: `Catálogo[Categoria]`.
-   - Formato → Estilo: **Botones** (tiles).
+   - Formato → Estilo: **Mosaico** (tiles).
    - Posicionar debajo de las tarjetas KPI.
 3. Insertar un segmentador de **SKU**:
    - Visual: Segmentador → Campo: `Catálogo[SKU]`.
@@ -490,19 +479,7 @@ RETURN
    - Visual: Segmentador → Campo: `Calendario[Fecha]`.
    - Power BI lo convertirá automáticamente en un segmentador de rango de fechas (slider).
    - Posicionar en la parte inferior de la página.
-5. **Configurar interacciones entre visualizaciones:**
-   - Seleccionar el segmentador de Categoría.
-   - Ir a la pestaña **Formato** (de la cinta superior) → **Editar interacciones**.
-   - Verificar que todas las tarjetas KPI muestren el ícono de **Filtro** (embudo) activo. Si alguna muestra "Ninguno", hacer clic en el ícono de embudo para activar la interacción.
-   - Hacer clic en **Editar interacciones** nuevamente para salir del modo de edición.
-6. **Repetir la adición de segmentadores en las otras páginas:**
-   - Ir a la página `Tendencia Demanda` → verificar que ya tiene segmentadores de SKU y Trimestre (del Paso 6).
-   - Ir a la página `Pronóstico vs Real` → verificar que ya tiene segmentador de SKU (del Paso 8).
-7. **Sincronizar segmentadores entre páginas (opcional pero recomendado):**
-   - Seleccionar el segmentador de SKU en la página `KPIs Inventario`.
-   - Ir a **Vista** → **Sincronizar segmentadores** (panel lateral).
-   - Marcar la casilla de sincronización para las tres páginas.
-   - Repetir para el segmentador de Categoría si existe en múltiples páginas.
+
 
 **Resultado esperado:** La página `KPIs Inventario` ahora tiene segmentadores de Categoría, SKU y rango de fechas. Al seleccionar una categoría (ej. "Embalaje"), las tarjetas KPI se actualizan mostrando solo los indicadores para SKU-A101, SKU-C303 y SKU-E505.
 

@@ -4,7 +4,7 @@
 
 | Campo | Valor |
 |---|---|
-| **Duración** | 17 minutos |
+| **Duración** | 25 minutos |
 | **Complejidad** | Media |
 | **Nivel Bloom** | Crear |
 | **Tecnologías** | Microsoft 365 Copilot, Power BI Desktop 2.130.754.0, Microsoft Edge / Google Chrome |

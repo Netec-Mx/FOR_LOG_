@@ -85,18 +85,18 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 | Columna A | Columna B | Columna C | Columna D | Columna E | Columna F |
 |-----------|-----------|-----------|-----------|-----------|-----------|
 | **Mes** | **SKU-A101** | **SKU-B202** | **SKU-C303** | **SKU-D404** | **SKU-E505** |
-| 1 (Ene-2024) | 520 | 180 | 410 | 1000 | 310 |
-| 2 (Feb-2024) | 535 | 175 | 450 | 1020 | 325 |
-| 3 (Mar-2024) | 548 | 190 | 380 | 1045 | 340 |
-| 4 (Abr-2024) | 560 | 185 | 500 | 1060 | 332 |
-| 5 (May-2024) | 575 | 178 | 420 | 1080 | 348 |
-| 6 (Jun-2024) | 590 | 192 | 530 | 1100 | 360 |
-| 7 (Jul-2024) | 605 | 170 | 390 | 1125 | 355 |
-| 8 (Ago-2024) | 618 | 188 | 560 | 1140 | 370 |
-| 9 (Sep-2024) | 632 | 182 | 430 | 1160 | 365 |
-| 10 (Oct-2024) | 645 | 195 | 580 | 1180 | 380 |
-| 11 (Nov-2024) | 660 | 172 | 410 | 1200 | 375 |
-| 12 (Dic-2024) | 675 | 190 | 600 | 1220 | 390 |
+| 1 | 520 | 180 | 410 | 1000 | 310 |
+| 2 | 535 | 175 | 450 | 1020 | 325 |
+| 3 | 548 | 190 | 380 | 1045 | 340 |
+| 4 | 560 | 185 | 500 | 1060 | 332 |
+| 5 | 575 | 178 | 420 | 1080 | 348 |
+| 6 | 590 | 192 | 530 | 1100 | 360 |
+| 7 | 605 | 170 | 390 | 1125 | 355 |
+| 8 | 618 | 188 | 560 | 1140 | 370 |
+| 9 | 632 | 182 | 430 | 1160 | 365 |
+| 10 | 645 | 195 | 580 | 1180 | 380 |
+| 11 | 660 | 172 | 410 | 1200 | 375 |
+| 12 |  |  |  |  |  |
 
 > **Nota:** SKU-A101 muestra tendencia creciente estable; SKU-B202 es relativamente plano con fluctuaciones; SKU-C303 presenta alta variabilidad (será el SKU crítico); SKU-D404 tiene tendencia creciente consistente; SKU-E505 muestra crecimiento moderado.
 
@@ -129,7 +129,7 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 **Instrucciones:**
 
 1. Inserta una nueva hoja y nómbrala **Pronósticos**.
-2. En la celda `A1` escribe `Mes`; en `B1` escribe `SKU-A101_Real`; en `C1` escribe `SKU-A101_Pronostico`. Repite el patrón para los 5 SKUs (columnas D–K para los SKUs restantes: Real y Pronóstico alternados).
+2. En la celda `A1` escribe `Mes`; en `B1` escribe `A101_Real`; en `C1` escribe `A101_Pronostico`. Repite el patrón para los 5 SKUs (columnas D–K para los SKUs restantes: Real y Pronóstico alternados).
 
    Estructura de encabezados sugerida:
 
@@ -140,13 +140,13 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 3. En `A2:A13` escribe los números 1 a 12.
 4. En `B2:B13` vincula la demanda real de SKU-A101 desde la hoja Demanda:
    ```excel
-   =Demanda!B2
+   =TblDemanda[@[SKU-A101]]
    ```
    Copia hacia abajo hasta la fila 13.
 
 5. En `C2` escribe la fórmula de pronóstico lineal para el mes 1 de SKU-A101:
    ```excel
-   =PRONOSTICO.LINEAL(A2, Demanda!$B$2:$B$13, Demanda!$A$2:$A$13)
+   =PRONOSTICO.LINEAL(A2;TblDemanda[SKU-A101];TblDemanda[Mes])
    ```
    > Esta fórmula calcula qué valor habría predicho la recta de regresión para cada mes. Usamos referencias absolutas en `y_conocidos` y `x_conocidos` para poder copiar la fórmula.
 
@@ -161,6 +161,8 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 
 **Verificación:** Compara el pronóstico del mes 6 de SKU-D404. Con tendencia lineal consistente, el valor pronosticado debe estar cercano al valor real (≈ 1100). Si la diferencia es mayor a 30 unidades, revisa las referencias de la fórmula.
 
+**Regresa a la hoja Demanda, y aplicando lo aprendido, calcula los valores del mes 12**
+
 ---
 
 ### Paso 3 — Generar pronósticos con TENDENCIA()
@@ -169,14 +171,14 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 
 **Instrucciones:**
 
-1. En la hoja **Pronósticos**, inserta una columna adicional después de cada columna de pronóstico, con encabezado `_Tend`. Ejemplo: en `L1` escribe `A101_Tend`.
+1. En la hoja **Pronósticos**, inserta una columna adicional al final por cada columna de pronóstico, con encabezado `_Tend`. Ejemplo: en `L1` escribe `A101_Tend`.
 
    > **Alternativa simplificada:** Para evitar reestructurar, usa las columnas L a P (una por SKU) para los resultados de TENDENCIA.
 
 2. Selecciona el rango `L2:L13` (12 celdas).
 3. Escribe la fórmula:
    ```excel
-   =TENDENCIA(Demanda!$B$2:$B$13, Demanda!$A$2:$A$13, A2:A13)
+   =TENDENCIA(Demanda!$B$2:$B$13, Demanda!$A$2:$A$13, $A$2:$A$13)
    ```
 4. Confirma con **Ctrl + Mayús + Enter** (en versiones anteriores a Microsoft 365 dinámico). En Microsoft 365 basta con Enter.
 5. Repite para los demás SKUs en columnas M, N, O y P, cambiando la referencia de `y_conocidos`:
@@ -188,6 +190,9 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 **Resultado esperado:** Los valores de `TENDENCIA()` deben ser **idénticos** a los de `PRONOSTICO.LINEAL()` para cada mes y SKU, ya que ambas funciones calculan la misma regresión lineal simple.
 
 **Verificación:** Resta la columna de TENDENCIA menos la de PRONOSTICO.LINEAL para SKU-A101 (por ejemplo, `=L2-C2`). El resultado debe ser **0** (o un valor despreciable < 0.001 por redondeo).
+
+**Regresa a la hoja Demanda, y aplicando lo aprendido, calcula los valores del mes 12, puedes agregar una nueva fila**
+
 
 ---
 
@@ -257,7 +262,6 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 
 **Resultado esperado:** Para SKU-A101 (tendencia muy lineal), los errores porcentuales absolutos deben ser bajos (< 3 %). Para SKU-C303 (alta variabilidad), los errores deben ser significativamente mayores (muchos > 15 %).
 
-**Verificación:** Revisa la fila correspondiente a SKU-C303, mes 3 (demanda real = 380, pronóstico lineal ≈ 445). El error absoluto debe ser ≈ 65 y el error porcentual absoluto ≈ 17.1 %. Si obtienes valores muy diferentes, verifica las referencias.
 
 ---
 
@@ -311,11 +315,11 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 
 | SKU | MAE (unidades) | MAPE |
 |-----|----------------|------|
-| SKU-A101 | ≈ 3–5 | ≈ 0.5–1.0 % |
+| SKU-A101 | ≈ 0–5 | ≈ 0.5–1.0 % |
 | SKU-B202 | ≈ 5–8 | ≈ 3–5 % |
 | SKU-C303 | ≈ 55–70 | ≈ 12–25 % |
-| SKU-D404 | ≈ 3–6 | ≈ 0.3–0.5 % |
-| SKU-E505 | ≈ 5–10 | ≈ 1.5–3 % |
+| SKU-D404 | ≈ 0–6 | ≈ 0.3–0.5 % |
+| SKU-E505 | ≈ 5–10 | ≈ 1.2–3 % |
 
 > Los valores exactos dependerán de la regresión lineal ajustada. Lo importante es que SKU-C303 muestre un MAPE significativamente mayor que los demás (> 20 %).
 
@@ -356,12 +360,12 @@ El archivo `Practica1_Demanda_SKU.xlsx` contiene una hoja llamada **Demanda** co
 |-----|-----|------|---------------|
 | SKU-A101 | ~4 | ~0.8 % | **Alta** |
 | SKU-B202 | ~7 | ~3.8 % | **Alta** |
-| SKU-C303 | ~63 | ~22 % | **Baja** |
+| SKU-C303 | ~63 | ~12 % | **Media** |
 | SKU-D404 | ~4 | ~0.4 % | **Alta** |
 | SKU-E505 | ~7 | ~2.0 % | **Alta** |
 
 **Verificación:**
-- SKU-C303 debe aparecer clasificado como **"Baja"** (celda con relleno rojo).
+- SKU-C303 debe aparecer clasificado como **"Media"** (celda con relleno amarillo).
 - Los demás SKUs deben clasificarse como **"Alta"**.
 - Si algún SKU aparece como "Media", verifica que los datos de demanda en la hoja original coincidan con los proporcionados.
 
