@@ -43,9 +43,9 @@ Al finalizar esta práctica serás capaz de:
 
 | Recurso | Ubicación |
 |---------|-----------|
-| `Practica2_Demanda_Cruda.csv` | [Practica2_Demanda_Cruda.csv](https://github.com/Netec-Mx/FOR_LOG_/blob/changes_course/Files/Practica2_Demanda_Cruda.csv) |
-| `Practica2_Catalogo_Productos.xlsx` | [Practica2_Catalogo_Productos.xlsx](https://github.com/Netec-Mx/FOR_LOG_/blob/changes_course/Files/Practica2_Catalogo_Productos.xlsx)  |
-| `Practica2_Inventario_Bodega.xlsx` | [Practica2_Inventario_Bodega.xlsx](https://github.com/Netec-Mx/FOR_LOG_/blob/changes_course/Files/Practica2_Inventario_Bodega.xlsx) |
+| `Practica2_Demanda_Cruda.csv` | [Practica2_Demanda_Cruda.csv](Files/Practica2_Demanda_Cruda.csv) |
+| `Practica2_Catalogo_Productos.xlsx` | [Practica2_Catalogo_Productos.xlsx](Files/Practica2_Catalogo_Productos.xlsx)  |
+| `Practica2_Inventario_Bodega.xlsx` | [Practica2_Inventario_Bodega.xlsx](Files/Practica2_Inventario_Bodega.xlsx) |
 | Power BI Desktop | [Power BI Desktop](https://www.microsoft.com/es-es/download/details.aspx?id=58494) |
  
 ---
